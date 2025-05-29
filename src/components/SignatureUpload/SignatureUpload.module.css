@@ -1,0 +1,26 @@
+.visuallyHidden {
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    border: 0;
+    padding: 0;
+    clip: rect(0 0 0 0);
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    margin: -1px;
+  }
+  .iconLabel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .iconLabel:hover{
+    background-color: #EBEBF0;
+    border-color: #646cff;
+  }

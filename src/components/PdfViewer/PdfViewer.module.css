@@ -1,0 +1,52 @@
+.mainContainer {
+  width: 100%;
+  height: calc(100vh - 77px);
+  display: flex;
+}
+.sideBar {
+  width: 30%;
+  padding: 16px;
+  height: 100%;
+  border-right: 1px solid #ebebf0;
+}
+.signsList {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.signThumb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #ebebf0;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.signItem {
+  max-width: 150px;
+  max-height: 70px;
+}
+.docContainer {
+  width: 70%;
+  height: 100%;
+}
+.docWrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  overflow: auto;
+  overscroll-behavior-x: auto;
+  overscroll-behavior-y: contain;
+  scroll-behavior: smooth;
+}
+.pageWrapper {
+  position: relative;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}

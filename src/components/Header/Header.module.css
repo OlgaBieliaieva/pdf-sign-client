@@ -1,0 +1,39 @@
+.header {
+  width: 100%;
+  border-bottom: 1px solid #ebebf0;
+}
+.headerContainer {
+  padding: 16px 32px;
+  display: flex;
+  gap: 16px;
+}
+.logoWrapper {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logoWrapper span {
+  font-size: 20px;
+  font-weight: 700;
+}
+.tools {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.toolsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+.mainButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
