@@ -8,6 +8,7 @@ function App() {
   const [pdfData, setPdfData] = useState(null);
   const [items, setItems] = useState([]);
   const [selectedPage, setSelectedPage] = useState(1);
+  const [pageDimensions, setPageDimensions] = useState({});
   const [availableSignatures, setAvailableSignatures] = useState(() => {
     const saved = localStorage.getItem("savedSignatures");
     try {
@@ -80,15 +81,21 @@ function App() {
     formData.append("y", signatureItem.y.toString());
     formData.append("page", signatureItem.page.toString());
     formData.append("imageBase64", signatureItem.src);
+    const pageSize = pageDimensions?.[signatureItem.page];
+    if (pageSize) {
+      formData.append("canvasWidth", pageSize.width.toString());
+      formData.append("canvasHeight", pageSize.height.toString());
+    }
 
     if (textItem) {
       formData.append("label", textItem.text);
-      formData.append("labelX", textItem.x.toString());
-      formData.append("labelY", textItem.y.toString());
+      formData.append("labelX", (textItem.x + 4).toString());
+      formData.append("labelY", (textItem.y + 6).toString());
     }
 
     try {
       const response = await axios.post(
+        // "http://localhost:3001/api/sign",
         "https://pdf-sign-api.onrender.com/api/sign",
         formData,
         {
@@ -136,6 +143,8 @@ function App() {
         onAddTextBlock={addTextBlockToPage}
         selectedPage={selectedPage}
         setSelectedPage={setSelectedPage}
+        pageDimensions={pageDimensions}
+        setPageDimensions={setPageDimensions}
       />
     </div>
   );

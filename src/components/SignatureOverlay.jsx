@@ -78,6 +78,7 @@ const SignatureOverlay = ({ items = [], pageNumber, onItemsChange }) => {
         position: "absolute",
         inset: 0,
         pointerEvents: "none",
+        width: 600,
       }}
     >
       <DndContext
@@ -92,8 +93,8 @@ const SignatureOverlay = ({ items = [], pageNumber, onItemsChange }) => {
                 src={item.src}
                 alt="Підпис"
                 style={{
-                  maxWidth: 150,
-                  maxHeight: 70,
+                  maxWidth: 120,
+                  height: "auto",
                   userSelect: "none",
                   pointerEvents: "auto",
                   draggable: false,

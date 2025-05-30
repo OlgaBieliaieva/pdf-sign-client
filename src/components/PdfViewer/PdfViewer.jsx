@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Document, Page } from "react-pdf";
 import SignatureOverlay from "../SignatureOverlay";
 import style from "./PdfViewer.module.css";
@@ -12,12 +12,34 @@ const PdfViewer = ({
   onAddTextBlock,
   selectedPage,
   setSelectedPage,
+  pageDimensions,
+  setPageDimensions,
 }) => {
   const [numPages, setNumPages] = useState(null);
+  const pageRefs = useRef({});
 
   const handleLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
   };
+
+  // Отримуємо фактичні розміри сторінки після рендеру
+  useEffect(() => {
+    if (!numPages) return;
+
+    for (let i = 1; i <= numPages; i++) {
+      const ref = pageRefs.current[i];
+      if (ref) {
+        const rect = ref.getBoundingClientRect();
+        setPageDimensions((prev) => ({
+          ...prev,
+          [i]: {
+            width: rect.width,
+            height: rect.height,
+          },
+        }));
+      }
+    }
+  }, [fileData, numPages]);
 
   return (
     <main className={style.mainContainer}>
@@ -30,7 +52,6 @@ const PdfViewer = ({
           {availableSignatures.map((src, i) => (
             <div className={style.signThumb} key={i}>
               <img
-                key={i}
                 src={src}
                 alt={`Підпис ${i + 1}`}
                 onClick={() => onAddSignature(src, selectedPage)}
@@ -48,25 +69,27 @@ const PdfViewer = ({
 
       <div className={style.docContainer}>
         <Document
-        className={style.docWrapper}
+          className={style.docWrapper}
           file={fileData}
           onLoadSuccess={handleLoadSuccess}
           loading="Завантаження..."
         >
           {Array.from(new Array(numPages), (_, index) => {
             const pageNum = index + 1;
+
             return (
               <div
                 key={pageNum}
                 className={style.pageWrapper}
                 onClick={() => setSelectedPage(pageNum)}
               >
-                <Page pageNumber={pageNum} width={600} />
+                <div ref={(el) => (pageRefs.current[pageNum] = el)}>
+                  <Page pageNumber={pageNum} width={600} />
+                </div>
                 <SignatureOverlay
                   pageNumber={pageNum}
                   items={items.filter((i) => i.page === pageNum)}
                   onItemsChange={(updatedItems) => {
-                    // Оновлюємо всі items, замінюючи items цієї сторінки
                     const otherPages = items.filter((i) => i.page !== pageNum);
                     onItemsChange([...otherPages, ...updatedItems]);
                   }}
